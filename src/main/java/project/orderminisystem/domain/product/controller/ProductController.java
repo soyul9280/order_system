@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import project.orderminisystem.domain.product.dto.request.CreateProductRequest;
 import project.orderminisystem.domain.product.dto.request.UpdateProductRequest;
 import project.orderminisystem.domain.product.dto.response.CreateProductResponse;
+import project.orderminisystem.domain.product.dto.response.ProductItemResponse;
 import project.orderminisystem.domain.product.dto.response.UpdateProductResponse;
+import project.orderminisystem.domain.product.service.ProductQueryService;
 import project.orderminisystem.domain.product.service.ProductService;
 import project.orderminisystem.global.common.ApiResponse;
 
@@ -23,6 +26,7 @@ import project.orderminisystem.global.common.ApiResponse;
 @RequiredArgsConstructor
 public class ProductController {
     private ProductService productService;
+    private ProductQueryService productQueryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,6 +45,12 @@ public class ProductController {
     public ApiResponse<Void> delete(@PathVariable Long productId) {
         productService.delete(productId);
         return ApiResponse.success();
+    }
+
+    @GetMapping("/{productId}")
+    public ApiResponse<ProductItemResponse> getProduct(@PathVariable Long productId){
+        ProductItemResponse response = productQueryService.getProductDetail(productId);
+        return ApiResponse.success(response);
     }
 
 }
