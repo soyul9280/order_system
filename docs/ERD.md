@@ -19,17 +19,17 @@
 | price | INT | NOT NULL | 상품 가격 |
 | stock | INT | NOT NULL, DEFAULT 0 | 재고 수량 |
 | description | VARCHAR(500) | NULL | 상품 설명 |
-| created_at | DATETIME | NOT NULL | 생성일시 |
-| updated_at | DATETIME | NOT NULL | 수정일시 |
+| created_at | TIMESTAMP | NOT NULL | 생성일시 |
+| updated_at | TIMESTAMP | NOT NULL | 수정일시 |
 
 ### 2.2 ORDER (주문)
 
-| 컬럼명 | 타입 | 제약조건 | 설명 |
-| --- | --- | --- | --- |
-| id | BIGINT | PK, AUTO_INCREMENT | 주문 고유 식별자 |
-| product_id | BIGINT | FK (PRODUCT.id), NOT NULL | 주문한 상품 ID |
-| quantity | INT | NOT NULL, DEFAULT 1 | 주문 수량 |
-| order_price | INT | NOT NULL | 주문 시점의 상품 가격 (스냅샷) |
-| status | VARCHAR(20) | NOT NULL | 주문 상태 |
-| created_at | DATETIME | NOT NULL | 생성일시 |
-| updated_at | DATETIME | NOT NULL | 수정일시 |
+| 컬럼명          | 타입 | 제약조건 | 설명 |
+|--------------| --- | --- | --- |
+| id           | BIGINT | PK, AUTO_INCREMENT | 주문 고유 식별자 |
+| product_id   | BIGINT | FK (PRODUCT.id), NOT NULL | 주문한 상품 ID |
+| quantity     | INT | NOT NULL, DEFAULT 1 | 주문 수량 |
+| order_p\rice | INT | NOT NULL | 주문 시점의 상품 가격 (스냅샷) |
+| status       | VARCHAR(20) | NOT NULL | 주문 상태 |
+| created_at   | TIMESTAMP | NOT NULL | 생성일시 |
+| updated_at   | TIMESTAMP | NOT NULL | 수정일시 |
