@@ -1,6 +1,8 @@
 package project.orderminisystem.domain.product.controller;
 
 import jakarta.validation.Valid;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,16 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import project.orderminisystem.domain.product.dto.request.CreateProductRequest;
 import project.orderminisystem.domain.product.dto.request.UpdateProductRequest;
 import project.orderminisystem.domain.product.dto.response.CreateProductResponse;
+import project.orderminisystem.domain.product.dto.response.CursorPageProductResponse;
 import project.orderminisystem.domain.product.dto.response.ProductItemResponse;
 import project.orderminisystem.domain.product.dto.response.UpdateProductResponse;
 import project.orderminisystem.domain.product.service.ProductQueryService;
 import project.orderminisystem.domain.product.service.ProductService;
 import project.orderminisystem.global.common.ApiResponse;
+import project.orderminisystem.global.common.Direction;
 
 @RestController
 @RequestMapping("/api/products")
@@ -54,8 +59,22 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ApiResponse<ProductItemResponse> getProduct(@PathVariable Long productId){
+    public ApiResponse<ProductItemResponse> getProductDetail(@PathVariable Long productId){
         ProductItemResponse response = productQueryService.getProductDetail(productId);
+        return ApiResponse.success(response);
+    }
+
+    @GetMapping
+    public ApiResponse<CursorPageProductResponse> getProducts(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "orderBy", defaultValue = "itemName") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "DESC") Direction direction,
+            @RequestParam(value = "cursor", required = false) String cursor,
+            @RequestParam(value = "after", required = false) LocalDateTime after,
+            @RequestParam(value = "limit", defaultValue = "50") int limit
+    ) {
+        CursorPageProductResponse response = productQueryService.getProducts(keyword, orderBy, direction, cursor, after,
+                limit);
         return ApiResponse.success(response);
     }
 
