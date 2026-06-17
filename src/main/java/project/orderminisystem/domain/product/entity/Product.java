@@ -33,6 +33,10 @@ public class Product extends BaseTimeEntity {
 
     private String description;
 
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
+
     @Builder
     public Product(
             Long id,
@@ -73,5 +77,9 @@ public class Product extends BaseTimeEntity {
         if (price != null) {
             this.price = price;
         }
+    }
+
+    public void logicallyDelete() {
+        this.isDeleted = true;
     }
 }

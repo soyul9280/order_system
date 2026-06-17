@@ -42,8 +42,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ApiResponse<Void> delete(@PathVariable Long productId) {
-        productService.delete(productId);
+    public ApiResponse<Void> deleteLogically(@PathVariable Long productId) {
+        productService.deleteLogically(productId);
+        return ApiResponse.success();
+    }
+
+    @DeleteMapping("/{productId}/hard")
+    public ApiResponse<Void> deletePhysically(@PathVariable Long productId) {
+        productService.deletePhysically(productId);
         return ApiResponse.success();
     }
 
