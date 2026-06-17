@@ -32,6 +32,7 @@ public class ProductService {
 
     public UpdateProductResponse update(UpdateProductCommand command) {
         Product product = productRepository.findById(command.id())
+                .filter(p -> !p.getIsDeleted())
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
 
         product.updateItemName(command.name());
@@ -42,7 +43,16 @@ public class ProductService {
         return UpdateProductResponse.from(product);
     }
 
-    public void delete(Long productId) {
+    public void deleteLogically(Long productId){
+        Product product =
+                productRepository.findById(productId).orElseThrow(() -> {
+                    throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+                });
+
+        product.logicallyDelete();
+    }
+
+    public void deletePhysically(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
 
