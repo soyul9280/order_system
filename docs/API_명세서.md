@@ -203,7 +203,27 @@
 
 ---
 
-### 1.5 상품 삭제
+### 1.5 상품 물리 삭제
+
+- **Method**: `DELETE`
+- **URL**: `/api/products/{productId}/hard`
+
+**Response 예시 (200 OK 또는 204 No Content)**
+```json
+{
+  "success": true,
+  "data": null,
+  "error": null
+}
+```
+
+| 응답 코드 | 설명 |
+| --- | --- |
+| 200 / 204 | 삭제 성공 |
+| 404 | 상품을 찾을 수 없음 (PRODUCT_NOT_FOUND) |
+| 409 | 해당 상품으로 생성된 주문이 존재하여 삭제 불가 (정책에 따라 선택 적용) |
+
+### 1.6 상품 논리 삭제
 
 - **Method**: `DELETE`
 - **URL**: `/api/products/{productId}`
@@ -221,7 +241,6 @@
 | --- | --- |
 | 200 / 204 | 삭제 성공 |
 | 404 | 상품을 찾을 수 없음 (PRODUCT_NOT_FOUND) |
-| 409 | 해당 상품으로 생성된 주문이 존재하여 삭제 불가 (정책에 따라 선택 적용) |
 
 ---
 
