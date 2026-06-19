@@ -80,5 +80,5 @@ public class ProductRepositoryImpl implements ProductCustomRepository{
 
         orderSpecifiers.add(isAsc ? product.createdAt.asc() : product.createdAt.desc());
         return orderSpecifiers;
-    }'
+    }
 }
