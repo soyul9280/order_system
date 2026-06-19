@@ -326,6 +326,61 @@
 
 ---
 
+### 2.3 주문 목록 조회
+
+- **Method**: `GET`
+- **URL**: `/api/orders`
+- **Query Parameter** (선택)
+
+| 파라미터 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| page | Integer | X | 페이지 번호 (기본값 0) |
+| size | Integer | X | 페이지 크기 (기본값 10) |
+
+**Response 예시 (200 OK)**
+```json
+{
+  "success": true,
+  "data": {
+    "content": [
+      {
+        "id": 1001,
+        "productId": 1,
+        "productName": "무선 마우스 (리뉴얼)",
+        "quantity": 2,
+        "orderPrice": 25000,
+        "totalPrice": 50000,
+        "status": "CREATED",
+        "createdAt": "2026-06-15T12:00:00",
+        "updatedAt": "2026-06-15T12:00:00"
+      },
+      {
+        "id": 1002,
+        "productId": 2,
+        "productName": "기계식 키보드",
+        "quantity": 3,
+        "orderPrice": 89000,
+        "totalPrice": 267000,
+        "status": "CREATED",
+        "createdAt": "2026-06-16T12:00:00",
+        "updatedAt": "2026-06-16T12:00:00"
+      }
+    ],
+    "totalElements": 2,
+    "totalPages": 1,
+    "page": 0,
+    "size": 10
+  },
+  "error": null
+}
+```
+
+| 응답 코드 | 설명 |
+| --- | --- |
+| 200 | 조회 성공 |
+
+---
+
 ## 3. 공통 에러 코드
 
 | 코드 | HTTP Status | 설명 |
