@@ -6,7 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import java.util.Objects;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +35,10 @@ public class Product extends BaseTimeEntity {
 
     private String description;
 
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
+
     @Builder
     public Product(
             Long id,
@@ -40,38 +46,42 @@ public class Product extends BaseTimeEntity {
             Integer price,
             Integer stock,
             String description
-    ){
-        this.id=id;
-        this.itemName=itemName;
-        this.price=price;
-        this.stock=stock;
-        this.description=description;
+    ) {
+        this.id = id;
+        this.itemName = itemName;
+        this.price = price;
+        this.stock = stock;
+        this.description = description;
     }
 
     public void updateDescription(String description) {
         if (description != null) {
             String normalized = description.trim();
-            if (Objects.equals(this.description, normalized)) {
+            if (!Objects.equals(this.description, normalized)) {
                 this.description = normalized;
             }
         }
     }
 
-    public void updateItemName(String name){
+    public void updateItemName(String name) {
         if (name != null) {
             this.itemName = name;
         }
     }
 
-    public void updateStock(Integer stock){
+    public void updateStock(Integer stock) {
         if (stock != null) {
             this.stock = stock;
         }
     }
 
-    public void updatePrice(Integer price){
+    public void updatePrice(Integer price) {
         if (price != null) {
             this.price = price;
         }
+    }
+
+    public void logicallyDelete() {
+        this.isDeleted = true;
     }
 }
