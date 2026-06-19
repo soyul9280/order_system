@@ -1,6 +1,5 @@
 package project.orderminisystem.domain.product.repository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import project.orderminisystem.domain.product.entity.Product;

@@ -57,7 +57,7 @@ public class Product extends BaseTimeEntity {
     public void updateDescription(String description) {
         if (description != null) {
             String normalized = description.trim();
-            if (Objects.equals(this.description, normalized)) {
+            if (!Objects.equals(this.description, normalized)) {
                 this.description = normalized;
             }
         }
@@ -83,9 +83,5 @@ public class Product extends BaseTimeEntity {
 
     public void logicallyDelete() {
         this.isDeleted = true;
-    }
-
-    public void minusStock(Integer quantity) {
-        this.stock = this.stock - quantity;
     }
 }

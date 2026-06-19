@@ -25,11 +25,10 @@ public class OrderService {
                 .filter(p -> !p.getIsDeleted())
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        if (command.quantity() > product.getStock()) {
+        int updated = productRepository.decrementStock(product.getId(), command.quantity());
+        if (updated == 0) {
             throw new BusinessException(ErrorCode.OUT_OF_STOCK);
         }
-
-        product.minusStock(command.quantity());
 
         Order order = Order.builder()
                 .productId(command.productId())
